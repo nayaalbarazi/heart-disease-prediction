@@ -16,16 +16,16 @@ Built and evaluated models
 Compared results and visualised insights
 
 ##Results
-- Accuracy: 96%
+- Accuracy: 88%
 - Percision:
- - No Disease: 97%
- - Disease: 95%
-- Recall:
  - No Disease: 95%
- - Disease: 97%
+ - Disease: 83%
+- Recall:
+ - No Disease: 80%
+ - Disease: 96%
 -F1 Score:
- - No Disease: 96%
- - No Disease: 96%  
+ - No Disease: 87%
+ - Disease: 89%  
 
 
 
