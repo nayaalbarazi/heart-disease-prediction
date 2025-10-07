@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {font-family: Tahoma, Arial, sans-serif;
+              max-width:760px;
+              margin:24px auto;
+              padding:0 16px;
+              line-height:1.5;}
+        input, textarea, button {
+            font-size:16px;
+            padding:8px;
+            margin:6px 0;
+            width:100%;
+            box-sizing:border-box;
+        }
+        .row {display:flex; gap:8px;}
+        .col {flex:1;}
+        pre {background:#f4f4f4; padding:10px; border-radius:6px;}
+        .small {font-size:13px; color:#666;}
+        .error {color:#a00;}
+        .ok {color:#0a6;}
+    </style>
+</head>
+<body>
+  <h1>Heart Disease Prediction</h1>
+  <p class="small"></p>
+
+  <div class="row">
+      <input class="col" id="age" placeholder="age"/>
+      <input class="col" id="sex" placeholder="sex"/>
+  </div>
+
+  <div>
+      <input class="col" id="cp" placeholder="cp"/>
+      <input class="col" id="trestbps" placeholder="trestbps"/>
+  </div>
+
+  <div>
+      <input class="col" id="chol" placeholder="chol"/>
+      <input class="col" id="fbs" placeholder="fbs"/>
+  </div>
+
+  <div>
+      <input class="col" id="restecg" placeholder="restecg"/>
+      <input class="col" id="thalach" placeholder="thalach"/>
+  </div>
+
+  <div>
+      <input class="col" id="exang" placeholder="exang"/>
+      <input class="col" id="oldpeak" placeholder="oldpeak"/>
+  </div>
+
+  <div>
+      <input class="col" id="slope" placeholder="slope"/>
+      <input class="col" id="ca" placeholder="ca"/>
+  </div>
+
+  <div>
+      <input class="col" id="thal" placeholder="thal"/>
+  </div>
+
+  <button id="sendBtn">Send</button>
+  <p id="status" class="small"></p>
+  <h3>Results</h3>
+  <pre id="result">No results yet</pre>
+
+  <script>
+    const API_URL = "http://127.0.0.1:5000/predict";
+    const fields = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg",
+                    "thalach", "exang", "oldpeak", "slope", "ca", "thal"
+                   ].map(id => document.getElementById(id));
+
+    const sendBtn = document.getElementById("sendBtn");
+    const resultE1 = document.getElementById("result");
+    const statusE1 = document.getElementById("status");
+
+    function parseInputs() {
+        const vals = fields.map(f => {
+            const v = f.value.trim();
+            const n = Number(v);
+            return v === "" ? NaN : (Number.isFinite(n) ? n : NaN);
+        });
+        return vals;
+    }
+
+    function validate(arr) {
+        if (!Array.isArray(arr)) return "Error in entering information";
+        if (arr.length !== 13) return "Number of features must be 13";
+        if (arr.some(x => Number.isNaN(x))) return "All features must be valid numbers";
+    }
+
+    async function sendRequest() {
+        sendBtn.disabled = true;
+        statusE1.textContent = "Sending...";
+        try {
+            const features = parseInputs();
+            const v = validate(features);
+            if (v) {
+                statusE1.innerHTML = `<span class="error">${v}</span>`;
+                sendBtn.disabled = false;
+                return;
+            }
+
+            const body = { features: features };
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            });
+
+            if (!res.ok) {
+                const text = await res.text();
+                statusE1.innerHTML = `<span class="error">Error: ${res.status} ${res.statusText}</span>`;
+                resultE1.textContent = text;
+                sendBtn.disabled = false;
+                return;
+            }
+
+            const data = await res.json();
+            statusE1.innerHTML = `<span class="ok">Received</span>`;
+            resultE1.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+            statusE1.innerHTML = `<span class="error">Error sending: ${err.message}</span>`;
+            resultE1.textContent = String(err);
+        } finally {
+            sendBtn.disabled = false;
+        }
+    }
+
+    sendBtn.addEventListener("click", sendRequest);
+
+    document.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+            if (document.activeElement.tagName === "INPUT") {
+                sendRequest();
+            }
+        }
+    });
+  </script>
+</body>
+</html>
