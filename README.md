@@ -1,33 +1,9 @@
 #Heart-Disease-Prediction
-Predicting whether a patient is likely to have a heart disease or not using ML
+An app that predict whether a patient is likely to have heart disease based on inputs
 
-##Dataset
-Used the heart-disease.csv from kaggle
+#App building
+This app was built using html, css and js for frontend and python for backend and model building
 
-##Tools
-Jupyter Notebook
-Python (Pandas,Numpy ,Matplotlib, Scikit-learn)
-Model fitting
-XGboost
+Accuracy: 88%
 
-##WorkFlow
-Cleaned & inspected dataset
-Built and evaluated models
-Compared results and visualised insights
-
-##Results
-- Accuracy: 88%
-- Percision:
- - No Disease: 95%
- - Disease: 83%
-- Recall:
- - No Disease: 80%
- - Disease: 96%
--F1 Score:
- - No Disease: 87%
- - Disease: 89%  
-
-
-
-##Contact
-Email: nayaalbarazi14@gmail.com
+##Contact Email: iamnayaalbarazi77@gmail.com
