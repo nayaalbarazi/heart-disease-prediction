@@ -1,4 +1,4 @@
-# Heart Disease Prediction API
+# Heart Disease Prediction APP
 
 A simple Flask API to predict heart disease based on user input features using a pre-trained machine learning model.
 
