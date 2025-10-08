@@ -1,9 +1,24 @@
-#Heart-Disease-Prediction
-An app that predict whether a patient is likely to have heart disease based on inputs
+# Heart Disease Prediction API
 
-#App building
-This app was built using html, css and js for frontend and python for backend and model building
+A simple Flask API to predict heart disease based on user input features using a pre-trained machine learning model.
 
-Accuracy: 88%
+## Features
+- Predicts presence of heart disease.
+- Returns prediction and probability if supported.
+- HTML + JavaScript frontend for testing.
+- CORS enabled for cross-domain requests.
 
-##Contact Email: iamnayaalbarazi77@gmail.com
+## Requirements
+- Python 3.8+
+- Flask
+- Flask-CORS
+- joblib
+- numpy
+- Pre-trained model file: `heart_disease_pred.pkl`
+
+## How to Run
+1.Start the Flask API: python app.py
+2.Open index.html in your browser.
+3.Fill in the input fields (13 features) and click Send.
+
+
