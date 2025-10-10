@@ -21,4 +21,6 @@ A simple Flask API to predict heart disease based on user input features using a
 3.Fill in the input fields (13 features) and click Send.
 note: make sure that all of the fiiles are in the same folder and that html file is in a folder called templates
 
+## contacts
+email:nayaalbarazi14@gmail.com
 
